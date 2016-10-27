@@ -1,0 +1,20 @@
+.nav{
+	background-color: #C2FCD9;
+	width: 100%;
+	height: 100px;
+}
+
+.radio{
+	width: 15%;
+	display: inline-block;
+	border: 1px solid black;
+    border-radius: 10px;
+}
+
+.radio label img{
+	width: 100%;
+}
+
+.radio label .primer{
+	width: 70%;
+}
