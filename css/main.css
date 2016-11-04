@@ -1,7 +1,15 @@
-.nav{
-	background-color: #C2FCD9;
-	width: 100%;
-	height: 100px;
+body{
+	background-image: url("../images/fondo.jpg");
+	background-size: cover;
+}
+
+.transparencia{
+	background-color: rgba(0,0,0,.4);
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
 }
 
 .radio{
@@ -15,6 +23,7 @@
 	width: 100%;
 }
 
-.radio label .primer{
-	width: 70%;
+h2{
+	color: #36D1C4;
 }
+
