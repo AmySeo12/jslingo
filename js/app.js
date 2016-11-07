@@ -78,13 +78,13 @@ $(function() {
 
 
 
-  	$(document).on('click', '#login', function(e) {
+  	$("#login").click(function(e) {
   		e.preventDefault();
 
   		facebookLogin();
   	});
 
-  	$(document).on('click', '#logout', function(e) {
+  	$("#login").click(function(e) {
   		e.preventDefault();
 
   		if (confirm("¿Está seguro?"))
