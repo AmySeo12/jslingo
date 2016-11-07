@@ -1,118 +1,95 @@
-var cargar= function(){
-	//$("#registrar").click(guardarSrc);
-	function statusChangeCallback(response) {
-		if (response.status === 'connected') {
-			loginAPI();
-			friendAPI();
-		} else if (response.status === 'not_authorized') {
-			document.getElementById('user-picture').innerHTML = '';
-			document.getElementById('user-name').innerHTML = '';
-			document.getElementById('user-friends').innerHTML = '';
-			document.getElementById('status').innerHTML = 'Por favor, inicie sesión ' + 'en esta aplicación.';
-		} else {
-			document.getElementById('user-picture').innerHTML = '';
-			document.getElementById('user-name').innerHTML = '';
-			document.getElementById('user-friends').innerHTML = '';
+$(function() {
 
-			document.getElementById('status').innerHTML = 'Por favor, inicie sesion' + 'en Facebook.';
-		}
-	}
+	var app_id = '620589191445726';
+	var scopes = '';
+
+	var btn_login = '<a href="#" id="login" class="btn btn-primary">Iniciar sesión</a>';
+
+	var div_session = "<div id='facebook-session'>"+
+					  "<strong></strong>"+
+					  "<img>"+
+					  "<a href='#' id='logout' class='btn btn-danger'>Cerrar sesión</a>"+
+					  "</div>";
+
 	window.fbAsyncInit = function() {
-		FB.init({
-			appId      : '1850360375199136',
-			xfbml      : true,
-			version    : 'v2.8'
-		});
-	};
 
-	function checkLoginState() {
-		FB.getLoginStatus(function (response) {
-			statusChangeCallback(response);
-		});
-	}
-
-	(function(d, s, id) {
-		var js, fjs = d.getElementsByTagName(s)[0];
-		if (d.getElementById(id)) return;
-		js = d.createElement(s); js.id = id;
-		js.src = "js/sdk1.js";
-		fjs.parentNode.insertBefore(js, fjs);
-	}(document, 'script', 'facebook-jssdk'));
+	  	FB.init({
+	    	appId      : app_id,
+	    	status     : true,
+	    	cookie     : true, 
+	    	xfbml      : true, 
+	    	version    : 'v2.1'
+	  	});
 
 
+	  	FB.getLoginStatus(function(response) {
+	    	statusChangeCallback(response, function() {});
+	  	});
+  	};
 
-	//API Facebook
-	window.fbAsyncInit = function() {
-	    FB.init({
-	      appId      : '620589191445726',
-	      xfbml      : true,
-	      version    : 'v2.8'
-	    });
-	};
+  	var statusChangeCallback = function(response, callback) {
+  		console.log(response);
+   		
+    	if (response.status === 'connected') {
+      		getFacebookData();
+    	} else {
+     		callback(false);
+    	}
+  	}
 
+  	var checkLoginState = function(callback) {
+    	FB.getLoginStatus(function(response) {
+      		callback(response);
+    	});
+  	}
 
-	(function(d, s, id)
-	  {
-	     var js, fjs = d.getElementsByTagName(s)[0];
-	     if (d.getElementById(id)) {return;}
-	     js = d.createElement(s); js.id = id;
-	     js.src = "js/sdk.js";
-	     fjs.parentNode.insertBefore(js, fjs);
-	   }
-	   (document, 'script', 'facebook-jssdk')
-	);
+  	var getFacebookData =  function() {
+  		FB.api('/me', function(response) {
+	  		$('#login').after(div_session);
+	  		$('#login').remove();
+	  		$('#facebook-session strong').text("Bienvenido: "+response.name);
+	  		$('#facebook-session img').attr('src','http://graph.facebook.com/'+response.id+'/picture?type=large');
+	  	});
+  	}
 
-	function loginAPI() {
-		console.log('Bienvenido!  Buscamos su informacion .... ');
-		FB.api('/me', function (response) {
-			document.getElementById('status').innerHTML = 'Hola, ' + response.name + '<br>' + 'Bienvenido a Tinder';
-			document.getElementById('user-picture').innerHTML = '<img src="https://graph.facebook.com/' + response.id + '/picture">';
-			window.localStorage.setItem("idImg",response.id);
-		});
-	}
+  	var facebookLogin = function() {
+  		checkLoginState(function(data) {
+  			if (data.status !== 'connected') {
+  				FB.login(function(response) {
+  					if (response.status === 'connected')
+  						getFacebookData();
+  				}, {scope: scopes});
+  			}
+  		})
+  	}
 
-	function friendAPI() {
-		document.getElementById('user-friends').innerHTML = 'before';
-		FB.api('me/friends?fields=id', function (response) {
-			if (!response.error) {
-				var markup = 'Amigos que usan esta app: ';
-				var friends = response.data;
-				var a = {};
-				for (var i = 0; i < friends.length && i < 25; i++) {
-					var friend = friends[i];
-					//markup += '<br>'+'<img src="' + friend.picture + '"> '+ '<br>' + friend.name;
-					markup += '<img src="https://graph.facebook.com/' + friend.id + '/picture">';
-					a[i] = friend.id;
-				}
-/*				var a = [];
-				for (var i = 0; i < friends.length && i < 25; i++) {
-					var friend = friends[i];
-					//markup += '<br>'+'<img src="' + friend.picture + '"> '+ '<br>' + friend.name;
-					markup += '<img src="https://graph.facebook.com/' + friend.id + '/picture">';
-					a.push(markup);
-				}*/
-				window.localStorage.setItem("array", JSON.stringify(a));
-				document.getElementById('user-friends').innerHTML = markup;
-			} else {
-				document.getElementById('user-friends').innerHTML = 'after';
+  	var facebookLogout = function() {
+  		checkLoginState(function(data) {
+  			if (data.status === 'connected') {
+				FB.logout(function(response) {
+					$('#facebook-session').before(btn_login);
+					$('#facebook-session').remove();
+				});
 			}
-		});
-	}
-	checkLoginState();
-}
+  		});
+
+  	}
 
 
-	//--------------------------------------------------------
 
-$(document).ready(cargar);
-//var url= localStorage.getItem("url");
-/*var guardarSrc= function(e){
-	e.preventDefault();
-	//$(".optionsRadios").each(recorrer);
-}
+  	$(document).on('click', '#login', function(e) {
+  		e.preventDefault();
 
-var recorrer=function(){
-	if($(this).is(":checked")){
-		url = localStorage.setItem("url",$(this).next().attr("src"));
-	}
-}*/
+  		facebookLogin();
+  	});
+
+  	$(document).on('click', '#logout', function(e) {
+  		e.preventDefault();
+
+  		if (confirm("¿Está seguro?"))
+  			facebookLogout();
+  		else 
+  			return false;
+  	});
+
+});

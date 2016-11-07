@@ -1,71 +1,31 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 	<head>
-		<title>Suscribete</title>
-		<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-		<link rel="stylesheet" type="text/css" href="css/main.css">
+		<meta charset="UTF-8">
+		<title>Facebook SDK para Javascript</title>
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+		<link rel="stylesheet" href="main.css">
 	</head>
 	<body>
-		<div class="transparencia"></div>
-		<section class="container">
-			<div class="row">
-				<div class="col-md-5 col-xs-12">
-					<h2>JsLingo, una plataforma para que aprendas este mundo de la programacón. Donde comenzarás desde lo más básico de JavaScript</h2>
-				</div>
-				<div class="col-md-7 col-xs-12">
-					<h2>Registrarse</h2>
-					<form>
-						<label>Nombre:</label><input type="text" name=""><br>
-						<label>Apellidos:</label><input type="text" name=""><br>
-						<label>Edad:</label><input type="text" name=""><br>
-						<label>Email:</label><input type="email" name=""><br>
-						<label>Genero:</label>
-						<select form="generoform">
-							<option>Femenino</option>
-							<option>Masculino</option>
-						</select><br>
-						<label>Escoge tu avatar:</label><br>
-						<div class="radio">
-							<label>
-								<input type="radio" name="optionsRadios" class="optionsRadios" value="option1">
-								<img src="images/avatar1.png">
-							</label>
-						</div>
-						<div class="radio">
-							<label>
-								<input type="radio" name="optionsRadios" class="optionsRadios" value="option2">
-								<img src="images/avatar2.png">
-							</label>
-						</div>
-						<div class="radio">
-							<label>
-								<input type="radio" name="optionsRadios" class="optionsRadios" value="option1">
-								<img src="images/avatar3.png">
-							</label>
-						</div>
-						<div class="radio">
-							<label>
-								<input type="radio" name="optionsRadios" class="optionsRadios" value="option2">
-								<img src="images/avatar4.png">
-							</label>
-						</div>
-						<button id="registrar">Registrar</button>
-					</form>
-				</div>
-			</div>
-		</section>
+		<h1>Facebook</h1>
 
-			<div
-  class="fb-like"
-  data-share="true"
-  data-width="450"
-  data-show-faces="true">
-</div>
-
-<div class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="true"></div>
-
-<div id="fb-root"></div>
-<script type="text/javascript" src="js/jquery.js"></script>
-<script type="text/javascript" src="js/app.js"></script>
+		<a href="#" id="login" class="btn btn-primary">Iniciar sesión</a>
+		<script src="jquery-3.1.0.min.js"></script>
+		<script src="js/app.js"></script>
+		<script>
+		// Load the SDK asynchronously
+		  (function(d, s, id) {
+		    var js, fjs = d.getElementsByTagName(s)[0];
+		    if (d.getElementById(id)) return;
+		    js = d.createElement(s); js.id = id;
+		    js.src = "https://connect.facebook.net/en_US/sdk.js";
+		    fjs.parentNode.insertBefore(js, fjs);
+		  }(document, 'script', 'facebook-jssdk'));
+		 </script>
 	</body>
 </html>
