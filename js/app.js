@@ -1,12 +1,15 @@
 var cargar= function(){
 	//$("#registrar").click(guardarSrc);
+
 	(function(d, s, id) {
 		var js, fjs = d.getElementsByTagName(s)[0];
 		if (d.getElementById(id)) return;
 		js = d.createElement(s); js.id = id;
-		js.src = "//connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v2.8&appId=620589191445726";
+		js.src = "js/sdk1.js";
 		fjs.parentNode.insertBefore(js, fjs);
 	}(document, 'script', 'facebook-jssdk'));
+
+
 
 	//API Facebook
 	window.fbAsyncInit = function() {
@@ -17,12 +20,13 @@ var cargar= function(){
 	    });
 	};
 
+
 	(function(d, s, id)
 	  {
 	     var js, fjs = d.getElementsByTagName(s)[0];
 	     if (d.getElementById(id)) {return;}
 	     js = d.createElement(s); js.id = id;
-	     js.src = "//connect.facebook.net/en_US/sdk.js";
+	     js.src = "js/sdk.js";
 	     fjs.parentNode.insertBefore(js, fjs);
 	   }
 	   (document, 'script', 'facebook-jssdk')
