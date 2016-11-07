@@ -50,7 +50,7 @@ $(function() {
 	  		$('#login').after(div_session);
 	  		$('#login').remove();
 	  		nombre= localStorage.setItem("nombre", response.name);
-	  		$('#facebook-session strong').text("Bienvenido: "+response.name);
+	  		$('#facebook-session strong').text("Bienvenido: "+nombre);
 	  		$('#facebook-session img').attr('src','http://graph.facebook.com/'+response.id+'/picture?type=large');
 	  	});
   	}
@@ -86,7 +86,7 @@ $(function() {
   		facebookLogin();
   	});
 
-  	$("#login").click(function(e) {
+  	$("#logout").click(function(e) {
   		e.preventDefault();
 
   		if (confirm("¿Está seguro?"))
