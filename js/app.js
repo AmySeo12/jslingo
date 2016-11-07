@@ -1,5 +1,4 @@
 $(function() {
-	var nombre= localStorage.getItem("nombre", nombre);
 	var app_id = '620589191445726';
 	var scopes = '';
 
@@ -47,7 +46,7 @@ $(function() {
   		FB.api('/me', function(response) {
 	  		$('#login').after(div_session);
 	  		$('#login').remove();
-	  		nombre= localStorage.setItem("nombre", response.name);
+	  		var nombre= localStorage.setItem("nombre", response.name);
 	  		$('#facebook-session strong').text("Bienvenido: "+nombre);
 	  		$('#facebook-session img').attr('src','http://graph.facebook.com/'+response.id+'/picture?type=large');
 	  	});
